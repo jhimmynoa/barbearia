@@ -1,13 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+// Service Data
+const services = [
+  { 
+    id: 1, 
+    name: 'Corte Premium', 
+    price: 60, 
+    image: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=2074&auto=format&fit=crop',
+    duration: '45 min'
+  },
+  { 
+    id: 2, 
+    name: 'Barba Completa', 
+    price: 45, 
+    image: 'https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=2070&auto=format&fit=crop',
+    duration: '30 min'
+  },
+  { 
+    id: 3, 
+    name: 'Corte + Barba', 
+    price: 95, 
+    image: 'https://images.unsplash.com/photo-1503951914875-befbb6470523?q=80&w=2068&auto=format&fit=crop',
+    duration: '1h 15m'
+  },
+  { 
+    id: 4, 
+    name: 'Degradê Navalhado', 
+    price: 70, 
+    image: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?q=80&w=2568&auto=format&fit=crop',
+    duration: '50 min'
+  },
+  { 
+    id: 5, 
+    name: 'Pezinho e Sobrancelha', 
+    price: 35, 
+    image: 'https://images.unsplash.com/photo-1593702295094-aea8c5c13586?q=80&w=2000&auto=format&fit=crop',
+    duration: '20 min'
+  }
+];
 
 const CalendarPage: React.FC = () => {
   const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState(new Date(2024, 5, 1)); // June 2024
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [selectedService, setSelectedService] = useState<number | null>(null);
   const [formData, setFormData] = useState({ name: '', phone: '' });
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
   const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay(); 
@@ -18,11 +59,14 @@ const CalendarPage: React.FC = () => {
 
   const handleBooking = (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectedDay && selectedTime && formData.name && formData.phone) {
-      alert(`Agendamento Confirmado!\nCliente: ${formData.name}\nTel: ${formData.phone}\nData: ${selectedDay}/06/2024 às ${selectedTime}`);
+    if (selectedDay && selectedTime && formData.name && formData.phone && selectedService) {
+      const service = services.find(s => s.id === selectedService);
+      alert(`Agendamento Confirmado!\nCliente: ${formData.name}\nServiço: ${service?.name}\nData: ${selectedDay}/06/2024 às ${selectedTime}`);
       navigate('/');
     }
   };
+
+  const activeService = services.find(s => s.id === selectedService);
 
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-orange-500 selection:text-white overflow-x-hidden">
@@ -36,13 +80,12 @@ const CalendarPage: React.FC = () => {
            <span className="font-bold text-xl tracking-wide cursor-pointer" onClick={() => navigate('/')}>BERGER</span>
         </div>
 
-        {/* Desktop Menu */}
+        {/* Desktop Menu - Centered Elements */}
         <div className="hidden md:flex items-center gap-8 text-sm text-gray-400 font-medium">
            <a href="#" className="hover:text-white transition-colors" onClick={() => navigate('/')}>Home</a>
            <a href="#" className="hover:text-white transition-colors">Serviços</a>
-           <a href="#" className="hover:text-white transition-colors">Portfólio</a>
-           <a href="#" className="hover:text-white transition-colors">Preços</a>
         </div>
+        
         <button onClick={() => navigate('/login')} className="hidden md:block px-6 py-2 rounded-full border border-white/10 hover:bg-white/5 transition-colors text-sm font-medium">
            Admin Login
         </button>
@@ -60,7 +103,6 @@ const CalendarPage: React.FC = () => {
            <div className="flex flex-col gap-8 text-center">
               <a href="#" className="text-xl font-bold text-white hover:text-orange-500 tracking-wider" onClick={() => { setIsMobileMenuOpen(false); navigate('/'); }}>HOME</a>
               <a href="#" className="text-xl font-bold text-white hover:text-orange-500 tracking-wider" onClick={() => setIsMobileMenuOpen(false)}>SERVIÇOS</a>
-              <a href="#" className="text-xl font-bold text-white hover:text-orange-500 tracking-wider" onClick={() => setIsMobileMenuOpen(false)}>PORTFÓLIO</a>
               <button 
                  onClick={() => {
                    setIsMobileMenuOpen(false);
@@ -95,7 +137,7 @@ const CalendarPage: React.FC = () => {
         </h1>
 
         <p className="text-gray-400 text-sm md:text-lg mb-10 max-w-xl mx-auto px-4">
-          Reserve seu horário com nossos especialistas em corte e tatuagem em poucos cliques.
+          Reserve seu horário com nossos especialistas em corte em poucos cliques.
         </p>
 
         <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto px-4">
@@ -141,11 +183,53 @@ const CalendarPage: React.FC = () => {
                  <span>2024</span>
               </div>
 
-              <div className="flex flex-col lg:flex-row gap-8 lg:gap-10">
+              {/* Service Selection Carousel */}
+              <div className="mb-10">
+                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                  1. Selecione o Serviço
+                  {selectedService && <i className="fa-solid fa-check-circle text-green-500"></i>}
+                </h3>
+                <div 
+                  ref={scrollContainerRef}
+                  className="flex overflow-x-auto gap-4 pb-4 snap-x scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-transparent"
+                  style={{ scrollBehavior: 'smooth' }}
+                >
+                  {services.map((service) => (
+                    <div 
+                      key={service.id}
+                      onClick={() => setSelectedService(service.id)}
+                      className={`
+                        min-w-[200px] w-[200px] md:min-w-[220px] bg-[#0a0a0a] rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-300 relative group snap-start
+                        ${selectedService === service.id 
+                          ? 'border-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.3)] scale-105' 
+                          : 'border-white/10 hover:border-orange-500/50 hover:bg-white/5 opacity-80 hover:opacity-100'}
+                      `}
+                    >
+                      <div className="h-32 w-full overflow-hidden">
+                         <img src={service.image} alt={service.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                      </div>
+                      <div className="p-4">
+                         <h4 className="font-display font-bold text-white text-sm mb-1">{service.name}</h4>
+                         <p className="text-[10px] text-gray-400 mb-2 flex items-center gap-1"><i className="fa-regular fa-clock"></i> {service.duration}</p>
+                         <p className="text-orange-500 font-bold text-lg">R$ {service.price}</p>
+                      </div>
+                      {selectedService === service.id && (
+                        <div className="absolute top-2 right-2 w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
+                           <i className="fa-solid fa-check text-black text-xs font-bold"></i>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 border-t border-white/5 pt-10">
                  {/* Calendar Side */}
                  <div className="flex-1">
                     <div className="flex justify-between items-center mb-6">
-                       <h3 className="text-lg md:text-xl font-bold text-white">Junho 2024</h3>
+                       <h3 className="text-lg md:text-xl font-bold text-white flex items-center gap-2">
+                         2. Escolha Data e Hora
+                       </h3>
                        <div className="flex gap-2">
                           <button className="px-2 py-1 bg-white/5 rounded hover:bg-white/10 text-xs">Hoje</button>
                           <div className="flex gap-1">
@@ -186,10 +270,24 @@ const CalendarPage: React.FC = () => {
 
                  {/* Form Side */}
                  <div className="w-full lg:w-80 bg-black/40 lg:bg-black/20 rounded-xl p-4 md:p-6 border border-white/5 flex flex-col">
-                    <h3 className="text-sm font-bold text-orange-400 uppercase tracking-wider mb-6">Informações</h3>
+                    <h3 className="text-sm font-bold text-orange-400 uppercase tracking-wider mb-6 flex items-center gap-2">
+                      3. Seus Dados
+                    </h3>
                     
                     <form onSubmit={handleBooking} className="flex-col flex gap-4 h-full">
                        <div className="space-y-4">
+                          {activeService && (
+                             <div className="bg-white/5 p-3 rounded border border-orange-500/20 mb-4 flex gap-3 items-center">
+                                <div className="w-10 h-10 rounded bg-gray-800 overflow-hidden shrink-0">
+                                   <img src={activeService.image} alt="Service" className="w-full h-full object-cover" />
+                                </div>
+                                <div>
+                                   <p className="text-white text-xs font-bold">{activeService.name}</p>
+                                   <p className="text-orange-500 text-xs font-bold">R$ {activeService.price}</p>
+                                </div>
+                             </div>
+                          )}
+
                           <div>
                              <label className="block text-[10px] text-gray-500 uppercase font-bold mb-1.5">Nome Completo</label>
                              <input 
@@ -240,9 +338,9 @@ const CalendarPage: React.FC = () => {
                        <div className="mt-6 lg:mt-auto pt-2 lg:pt-6">
                           <button 
                              type="submit"
-                             disabled={!selectedDay || !selectedTime || !formData.name || !formData.phone}
+                             disabled={!selectedDay || !selectedTime || !formData.name || !formData.phone || !selectedService}
                              className={`w-full py-3 rounded-lg font-bold text-sm uppercase tracking-wide transition-all
-                                ${(!selectedDay || !selectedTime || !formData.name || !formData.phone)
+                                ${(!selectedDay || !selectedTime || !formData.name || !formData.phone || !selectedService)
                                   ? 'bg-white/5 text-gray-500 cursor-not-allowed'
                                   : 'bg-gradient-to-r from-orange-500 to-red-600 text-white shadow-[0_0_20px_rgba(249,115,22,0.4)] hover:shadow-[0_0_30px_rgba(249,115,22,0.6)] transform hover:-translate-y-0.5'
                                 }
