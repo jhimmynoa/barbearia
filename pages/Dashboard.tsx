@@ -26,28 +26,34 @@ const pieData = [
 ];
 const COLORS = ['#F97316', '#E53935', '#FCD34D', '#525252'];
 
-const bookings = [
-  { id: 1, time: '10:00', service: 'Corte de Cabelo', expected: '10:30', client: 'Dennis', employee: 'Bermil', action: '...' },
-  { id: 2, time: '10:25', service: 'Estilização', expected: '10:50', client: 'Bernis', employee: 'Leslie', action: '...' },
-  { id: 3, time: '10:45', service: 'Corte na Tesoura', expected: '10:55', client: 'Driss', employee: 'Kistin', action: '...' },
-  { id: 4, time: '11:00', service: 'Barba Completa', expected: '11:20', client: 'Alex', employee: 'Thieesa', action: '...' },
+// Updated Mock Data with Status and Date for filtering
+const bookingsData = [
+  { id: 1, date: '2023-10-25', time: '10:00', service: 'Corte de Cabelo', expected: '10:30', client: 'Dennis', employee: 'Bermil', status: 'confirmed' },
+  { id: 2, date: '2023-10-25', time: '10:25', service: 'Estilização', expected: '10:50', client: 'Bernis', employee: 'Leslie', status: 'confirmed' },
+  { id: 3, date: '2023-10-25', time: '10:45', service: 'Corte na Tesoura', expected: '10:55', client: 'Driss', employee: 'Kistin', status: 'pending' },
+  { id: 4, date: '2023-10-25', time: '11:00', service: 'Barba Completa', expected: '11:20', client: 'Alex', employee: 'Thieesa', status: 'confirmed' },
+  { id: 5, date: '2023-10-24', time: '14:00', service: 'Corte + Barba', expected: '15:00', client: 'Jorge', employee: 'Bermil', status: 'cancelled' },
+  { id: 6, date: '2023-10-26', time: '09:00', service: 'Degradê', expected: '09:40', client: 'Miguel', employee: 'Kistin', status: 'confirmed' },
+  { id: 7, date: '2023-10-23', time: '16:00', service: 'Pezinho', expected: '16:15', client: 'Lucas', employee: 'Leslie', status: 'cancelled' },
+  { id: 8, date: '2023-10-26', time: '11:30', service: 'Corte Infantil', expected: '12:00', client: 'Enzo', employee: 'Thieesa', status: 'pending' },
 ];
 
-const servicesList = [
-    { id: 1, name: "Corte de Cabelo", desc: "Corte de cabelo com uma parte de corte de cabelo.", price: "R$ 40,00", time: "29 min", icon: "fa-scissors" },
-    { id: 2, name: "Barba Completa", desc: "Barba completa com uma parte de barba completa.", price: "R$ 30,00", time: "20 min", icon: "fa-user-astronaut" }, // Using generic icon as placeholder for beard
-    { id: 3, name: "Corte + Barba", desc: "Corte de cabelo, como a corte + Barba + corte de cabelo.", price: "R$ 65,00", time: "50 min", icon: "fa-scissors" },
-    { id: 4, name: "Degradê", desc: "Corte de cabelo com degradê com a rminho de corte + degradê.", price: "R$ 45,00", time: "20 min", icon: "fa-lines-leaning" },
-    { id: 5, name: "Sobrancelha", desc: "Sobrancelha como será de sobrancelha.", price: "R$ 15,00", time: "15 min", icon: "fa-eye" },
-    { id: 6, name: "Pezinho", desc: "Pezinho do pezinho.", price: "R$ 10,00", time: "Duração", icon: "fa-shoe-prints" },
+const detailedServicesList = [
+    { id: 1, name: "Corte Cabelo", desc: "Corte tradicional ou moderno, inclui lavagem e finalização", prices: "R$ 50 - R$ 70", duration: "45 min", popularity: 85 },
+    { id: 2, name: "Barba", desc: "Modelagem e aparagem completa da barba, com toalha quente", prices: "R$ 35 - R$ 50", duration: "30 min", popularity: 60 },
+    { id: 3, name: "Combo (Corte + Barba)", desc: "Serviço completo de cabelo e barba com desconto", prices: "R$ 80 - R$ 110", duration: "1 hora 15 min", popularity: 75 },
+    { id: 4, name: "Sobrancelha", desc: "Design de sobrancelha com navalha ou pinça", prices: "R$ 20", duration: "15 min", popularity: 40 },
+    { id: 5, name: "Degradê Navalhado", desc: "Acabamento premium com navalha e transição perfeita", prices: "R$ 60 - R$ 80", duration: "50 min", popularity: 90 },
 ];
 
-const clientsList = [
-    { id: 1, name: "João Silva", phone: "(11) 98765-4321", email: "joao.silva@email.com", lastVisit: "15 Out 2023" },
-    { id: 2, name: "Maria Souza", phone: "(21) 91234-5678", email: "maria.souza@email.com", lastVisit: "10 Out 2023" },
-    { id: 3, name: "Carlos Pereira", phone: "(31) 99876-5432", email: "carlos.pereira@email.com", lastVisit: "05 Out 2023" },
-    { id: 4, name: "Ana Lima", phone: "(41) 97654-3210", email: "ana.lima@email.com", lastVisit: "28 Set 2023" },
-    { id: 5, name: "Pedro Santos", phone: "(51) 98888-7777", email: "pedro.santos@email.com", lastVisit: "20 Set 2023" },
+const detailedClientsList = [
+    { id: 1, name: "Carlos Silva", phone: "+55 11 99999-0000", email: "carlos.silva@email.com", lastVisit: "20/10/2024", fidelity: "Gold", preferred: "Corte Cabelo" },
+    { id: 2, name: "Ana Paula", phone: "+55 11 98888-1111", email: "ana.paula@email.com", lastVisit: "15/10/2024", fidelity: "Silver", preferred: "Barba" }, // Example data logic quirk
+    { id: 3, name: "Marcos Oliveira", phone: "+55 11 97777-2222", email: "marcos.o@email.com", lastVisit: "15/10/2024", fidelity: "Bronze", preferred: "Combo" },
+    { id: 4, name: "Niasel Leinha", phone: "+55 11 96666-3333", email: "niasel@email.com", lastVisit: "15/10/2024", fidelity: "Bronze", preferred: "Corte Cabelo" },
+    { id: 5, name: "Marquerlez Hamano", phone: "+55 11 95555-4444", email: "marquerlez@email.com", lastVisit: "15/10/2024", fidelity: "Silver", preferred: "Corte Cabelo" },
+    { id: 6, name: "Alela Tagana", phone: "+55 11 94444-5555", email: "alela@email.com", lastVisit: "15/10/2024", fidelity: "Bronze", preferred: "Corte Cabelo" },
+    { id: 7, name: "Marcos Oliveira", phone: "+55 11 93333-6666", email: "marcos.oliveira@email.com", lastVisit: "15/10/2024", fidelity: "Gold", preferred: "Combo" },
 ];
 
 const professionalsList = [
@@ -59,19 +65,53 @@ const professionalsList = [
 
 // --- COMPONENTS ---
 
-const DashboardHome = () => (
+const DashboardHome = ({ setActiveTab }: { setActiveTab: (tab: string) => void }) => {
+    const [bookingFilter, setBookingFilter] = useState<'upcoming' | 'all' | 'cancelled'>('upcoming');
+    const [showFilterMenu, setShowFilterMenu] = useState(false);
+    const [filters, setFilters] = useState({
+        professional: '',
+        date: ''
+    });
+
+    // Filtering Logic
+    const filteredBookings = bookingsData.filter(booking => {
+        if (bookingFilter === 'cancelled' && booking.status !== 'cancelled') return false;
+        if (bookingFilter === 'upcoming' && (booking.status === 'cancelled' || booking.status === 'completed')) return false;
+        if (filters.professional && !booking.employee.toLowerCase().includes(filters.professional.toLowerCase())) return false;
+        if (filters.date && booking.date !== filters.date) return false;
+        return true;
+    });
+
+    const getStatusBadge = (status: string) => {
+        switch(status) {
+            case 'confirmed': return <span className="bg-green-500/10 text-green-500 text-[10px] font-bold px-2 py-1 rounded border border-green-500/20">CONFIRMADO</span>;
+            case 'pending': return <span className="bg-yellow-500/10 text-yellow-500 text-[10px] font-bold px-2 py-1 rounded border border-yellow-500/20">PENDENTE</span>;
+            case 'cancelled': return <span className="bg-red-500/10 text-red-500 text-[10px] font-bold px-2 py-1 rounded border border-red-500/20">CANCELADO</span>;
+            default: return null;
+        }
+    };
+
+    const stats = [
+        { title: 'Total de Clientes', value: '24', icon: 'fa-user', color: 'text-accent-red', target: 'clients' },
+        { title: 'Total de Serviços', value: '5', icon: 'fa-scissors', color: 'text-primary', target: 'services' },
+        { title: 'Agendamentos', value: bookingsData.filter(b => b.status === 'confirmed').length.toString(), icon: 'fa-calendar-check', color: 'text-orange-400', target: 'appointments_detail' }
+    ];
+
+    return (
     <>
          {/* Stats Cards */}
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8">
-           {[
-             { title: 'Total de Clientes', value: '24', icon: 'fa-user', color: 'text-accent-red' },
-             { title: 'Total de Serviços', value: '6', icon: 'fa-scissors', color: 'text-primary' },
-             { title: 'Agendamentos', value: '6', icon: 'fa-calendar-check', color: 'text-orange-400' }
-           ].map((stat, idx) => (
+           {stats.map((stat, idx) => (
              <div key={idx} className="bg-[#121212]/90 backdrop-blur-sm p-6 rounded-xl border border-white/5 flex flex-col justify-between h-32 relative overflow-hidden group hover:border-white/20 transition-colors shadow-lg">
                 <div className="flex justify-between items-start z-10">
                    <span className="text-gray-400 text-xs font-bold uppercase tracking-wider">{stat.title}</span>
-                   <i className="fa-solid fa-expand text-gray-600 text-xs"></i>
+                   <button 
+                     onClick={() => setActiveTab(stat.target)}
+                     className="text-gray-600 hover:text-white transition-colors cursor-pointer"
+                     title="Ver detalhes em tela cheia"
+                   >
+                     <i className="fa-solid fa-expand text-xs"></i>
+                   </button>
                 </div>
                 <div className="flex items-center gap-3 z-10">
                    <div className={`w-10 h-10 rounded-full bg-white/5 flex items-center justify-center ${stat.color}`}>
@@ -114,7 +154,7 @@ const DashboardHome = () => (
               </div>
            </div>
 
-           {/* Popular Services Chart (Previously Customer Age) */}
+           {/* Popular Services Chart */}
            <div className="bg-[#121212]/90 backdrop-blur-sm p-6 rounded-xl border border-white/5 flex flex-col shadow-lg">
               <div className="flex justify-between items-center mb-6">
                  <h3 className="text-white font-bold text-sm md:text-base">Serviços Mais Populares</h3>
@@ -154,141 +194,407 @@ const DashboardHome = () => (
         </div>
 
         {/* Bookings Table */}
-        <div className="bg-[#121212]/90 backdrop-blur-sm rounded-xl border border-white/5 overflow-hidden shadow-lg">
+        <div className="bg-[#121212]/90 backdrop-blur-sm rounded-xl border border-white/5 overflow-visible shadow-lg relative z-20">
            <div className="p-4 md:p-6 border-b border-white/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <div className="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
-                 <button className="bg-primary text-black text-xs font-bold px-4 py-2 rounded-full whitespace-nowrap shadow-[0_0_10px_rgba(249,115,22,0.3)]">Próximos</button>
-                 <button className="text-gray-400 hover:text-white text-xs font-bold px-4 py-2 rounded-full transition-colors whitespace-nowrap">Todos</button>
-                 <button className="text-gray-400 hover:text-white text-xs font-bold px-4 py-2 rounded-full transition-colors whitespace-nowrap">Cancelados</button>
+                 <button 
+                    onClick={() => setBookingFilter('upcoming')}
+                    className={`text-xs font-bold px-4 py-2 rounded-full whitespace-nowrap transition-all duration-300 ${bookingFilter === 'upcoming' ? 'bg-primary text-black shadow-[0_0_10px_rgba(249,115,22,0.3)]' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                 >
+                    Próximos
+                 </button>
+                 <button 
+                    onClick={() => setBookingFilter('all')}
+                    className={`text-xs font-bold px-4 py-2 rounded-full whitespace-nowrap transition-all duration-300 ${bookingFilter === 'all' ? 'bg-white text-black shadow-[0_0_10px_rgba(255,255,255,0.3)]' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                 >
+                    Todos
+                 </button>
+                 <button 
+                    onClick={() => setBookingFilter('cancelled')}
+                    className={`text-xs font-bold px-4 py-2 rounded-full whitespace-nowrap transition-all duration-300 ${bookingFilter === 'cancelled' ? 'bg-red-600 text-white shadow-[0_0_10px_rgba(220,38,38,0.3)]' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                 >
+                    Cancelados
+                 </button>
               </div>
-              <button className="text-xs bg-black border border-white/10 px-3 py-1.5 rounded text-gray-400 flex items-center gap-2 self-end md:self-auto">
-                 Filtrar <i className="fa-solid fa-filter"></i>
-              </button>
+              
+              <div className="relative self-end md:self-auto">
+                <button 
+                    onClick={() => setShowFilterMenu(!showFilterMenu)}
+                    className={`text-xs border px-3 py-1.5 rounded text-gray-400 flex items-center gap-2 transition-colors ${showFilterMenu ? 'bg-primary text-black border-primary font-bold' : 'bg-black border-white/10'}`}
+                >
+                    Filtrar <i className={`fa-solid ${showFilterMenu ? 'fa-xmark' : 'fa-filter'}`}></i>
+                </button>
+
+                {/* Filter Dropdown */}
+                {showFilterMenu && (
+                    <div className="absolute right-0 top-full mt-2 w-64 bg-[#1a1a1a] border border-white/10 rounded-lg shadow-xl p-4 z-50 animate-in fade-in zoom-in-95 duration-200">
+                        <h4 className="text-white text-xs font-bold mb-3 uppercase tracking-wider">Filtrar Por</h4>
+                        
+                        <div className="space-y-3">
+                            <div>
+                                <label className="block text-[10px] text-gray-500 font-bold mb-1">Profissional</label>
+                                <select 
+                                    className="w-full bg-black border border-white/10 rounded text-xs text-gray-300 p-2 outline-none focus:border-primary"
+                                    value={filters.professional}
+                                    onChange={(e) => setFilters({...filters, professional: e.target.value})}
+                                >
+                                    <option value="">Todos</option>
+                                    <option value="Bermil">Bermil</option>
+                                    <option value="Leslie">Leslie</option>
+                                    <option value="Kistin">Kistin</option>
+                                    <option value="Thieesa">Thieesa</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label className="block text-[10px] text-gray-500 font-bold mb-1">Data Específica</label>
+                                <input 
+                                    type="date" 
+                                    className="w-full bg-black border border-white/10 rounded text-xs text-gray-300 p-2 outline-none focus:border-primary"
+                                    value={filters.date}
+                                    onChange={(e) => setFilters({...filters, date: e.target.value})}
+                                />
+                            </div>
+
+                            <div className="pt-2 flex justify-between items-center">
+                                <button 
+                                    onClick={() => setFilters({professional: '', date: ''})}
+                                    className="text-[10px] text-gray-500 hover:text-white underline"
+                                >
+                                    Limpar
+                                </button>
+                                <button 
+                                    onClick={() => setShowFilterMenu(false)}
+                                    className="text-xs bg-primary text-black font-bold px-3 py-1 rounded hover:bg-orange-600"
+                                >
+                                    Aplicar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+              </div>
            </div>
+           
            <div className="overflow-x-auto">
               <table className="w-full text-sm text-left min-w-[800px]">
                  <thead className="text-xs text-primary uppercase bg-black/40">
                     <tr>
-                       <th className="px-6 py-4">Horário</th>
+                       <th className="px-6 py-4">Data/Horário</th>
                        <th className="px-6 py-4">Serviço</th>
                        <th className="px-6 py-4">Término Previsto</th>
                        <th className="px-6 py-4">Cliente</th>
                        <th className="px-6 py-4">Profissional</th>
+                       <th className="px-6 py-4 text-center">Status</th>
                        <th className="px-6 py-4 text-right">Ação</th>
                     </tr>
                  </thead>
                  <tbody className="divide-y divide-white/5">
-                    {bookings.map((booking) => (
-                       <tr key={booking.id} className="hover:bg-white/5 transition-colors">
-                          <td className="px-6 py-4 font-medium text-white">{booking.time}</td>
-                          <td className="px-6 py-4 text-gray-400">{booking.service}</td>
-                          <td className="px-6 py-4 text-gray-400">{booking.expected}</td>
-                          <td className="px-6 py-4 text-orange-200">{booking.client}</td>
-                          <td className="px-6 py-4 text-gray-300">{booking.employee}</td>
-                          <td className="px-6 py-4 text-right">
-                             <button className="text-gray-500 hover:text-white"><i className="fa-solid fa-ellipsis"></i></button>
-                          </td>
-                       </tr>
-                    ))}
+                    {filteredBookings.length > 0 ? (
+                        filteredBookings.map((booking) => (
+                        <tr key={booking.id} className="hover:bg-white/5 transition-colors group">
+                            <td className="px-6 py-4 font-medium text-white">
+                                <div className="flex flex-col">
+                                    <span>{booking.time}</span>
+                                    <span className="text-[10px] text-gray-500">{booking.date}</span>
+                                </div>
+                            </td>
+                            <td className="px-6 py-4 text-gray-400">{booking.service}</td>
+                            <td className="px-6 py-4 text-gray-400">{booking.expected}</td>
+                            <td className="px-6 py-4 text-orange-200">{booking.client}</td>
+                            <td className="px-6 py-4 text-gray-300">{booking.employee}</td>
+                            <td className="px-6 py-4 text-center">
+                                {getStatusBadge(booking.status)}
+                            </td>
+                            <td className="px-6 py-4 text-right">
+                                <button className="text-gray-500 hover:text-white group-hover:text-primary transition-colors"><i className="fa-solid fa-ellipsis-vertical px-2"></i></button>
+                            </td>
+                        </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan={7} className="text-center py-10 text-gray-500">
+                                <i className="fa-regular fa-folder-open text-2xl mb-2 block"></i>
+                                Nenhum agendamento encontrado para este filtro.
+                            </td>
+                        </tr>
+                    )}
                  </tbody>
               </table>
            </div>
         </div>
     </>
-);
+    );
+};
 
+// --- DETAILED SERVICES VIEW ---
 const ServicesView = () => (
     <div className="space-y-6">
-        <div className="flex justify-end">
+        <div className="flex justify-between items-center mb-6">
+             <h2 className="text-2xl font-bold font-display text-white">Serviços Detalhado - Dashboard</h2>
              <button className="bg-primary hover:bg-orange-600 text-black font-bold py-2 px-6 rounded shadow-[0_0_15px_rgba(249,115,22,0.4)] text-sm">
-                Adicionar Novo Serviço
+                Adicionar Serviço
              </button>
         </div>
-        <div className="space-y-4">
-            {servicesList.map(service => (
-                <div key={service.id} className="bg-[#121212]/90 border border-white/10 p-6 rounded-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 hover:border-primary/50 transition-colors">
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-lg bg-orange-500/10 text-orange-500 flex items-center justify-center border border-orange-500/20">
-                            <i className={`fa-solid ${service.icon} text-xl`}></i>
-                        </div>
-                        <div>
-                            <h3 className="font-bold text-white text-lg">{service.name}</h3>
-                            <p className="text-gray-400 text-sm max-w-md">{service.desc}</p>
-                            <div className="flex items-center gap-3 mt-1 text-xs">
-                                <span className="font-bold text-white">{service.price}</span>
-                                <span className="text-gray-500"><i className="fa-regular fa-clock mr-1"></i>{service.time}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex gap-2">
-                        <button className="px-4 py-2 bg-orange-500 text-black text-xs font-bold rounded hover:bg-orange-600">Editar</button>
-                        <button className="px-4 py-2 bg-white/5 text-gray-400 text-xs font-bold rounded border border-white/10 hover:text-white hover:bg-white/10">Excluir</button>
-                    </div>
-                </div>
-            ))}
+
+        <div className="bg-[#121212]/90 border border-white/10 rounded-xl overflow-hidden shadow-xl">
+             <div className="p-4 border-b border-white/5 bg-black/40 flex justify-between items-center">
+                 <h3 className="text-white font-bold">Serviços</h3>
+                 <div className="relative w-64">
+                    <input type="text" placeholder="Pesquisar..." className="w-full bg-black border border-white/10 rounded-lg px-4 py-2 text-sm text-gray-300 focus:border-primary outline-none" />
+                    <i className="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-gray-500 text-xs"></i>
+                 </div>
+             </div>
+
+             <div className="overflow-x-auto">
+                 <table className="w-full text-sm text-left">
+                     <thead className="text-xs text-white uppercase bg-orange-600">
+                        <tr>
+                           <th className="px-6 py-4 w-12">#</th>
+                           <th className="px-6 py-4">Nome do Serviço</th>
+                           <th className="px-6 py-4">Descrição</th>
+                           <th className="px-6 py-4">Preços</th>
+                           <th className="px-6 py-4">Duração Média</th>
+                           <th className="px-6 py-4">Popularidade</th>
+                           <th className="px-6 py-4 text-right">Ações</th>
+                        </tr>
+                     </thead>
+                     <tbody className="divide-y divide-white/5">
+                        {detailedServicesList.map((service, index) => (
+                            <tr key={service.id} className="hover:bg-white/5 transition-colors">
+                                <td className="px-6 py-4 text-gray-500">{index + 1}</td>
+                                <td className="px-6 py-4 text-white font-medium">{service.name}</td>
+                                <td className="px-6 py-4 text-gray-400 max-w-xs truncate">{service.desc}</td>
+                                <td className="px-6 py-4 text-white">{service.prices}</td>
+                                <td className="px-6 py-4 text-gray-300">{service.duration}</td>
+                                <td className="px-6 py-4">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-24 h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div className="h-full bg-orange-500 rounded-full" style={{ width: `${service.popularity}%` }}></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td className="px-6 py-4 text-right">
+                                    <div className="flex justify-end gap-2">
+                                        <button className="px-3 py-1 bg-white/5 border border-white/10 rounded text-xs text-gray-300 hover:text-white hover:border-white/30">Editar</button>
+                                        <button className="px-3 py-1 bg-white/5 border border-red-500/20 rounded text-xs text-red-500 hover:bg-red-500/10">Remover</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                     </tbody>
+                 </table>
+             </div>
+             
+             <div className="p-4 border-t border-white/5 flex justify-center">
+                 <div className="flex gap-2">
+                    <button className="w-8 h-8 flex items-center justify-center bg-black border border-white/10 rounded text-gray-500 hover:text-white"><i className="fa-solid fa-chevron-left text-xs"></i></button>
+                    <button className="w-8 h-8 flex items-center justify-center bg-orange-600 rounded text-white font-bold">1</button>
+                    <button className="w-8 h-8 flex items-center justify-center bg-black border border-white/10 rounded text-gray-500 hover:text-white"><i className="fa-solid fa-chevron-right text-xs"></i></button>
+                 </div>
+             </div>
         </div>
     </div>
 );
 
+// --- DETAILED CLIENTS VIEW ---
 const ClientsView = () => (
     <div className="space-y-6">
-        <div className="flex flex-col md:flex-row justify-between gap-4">
-             <div className="relative flex-1 max-w-md flex gap-2">
-                <div className="relative flex-1">
-                   <input type="text" placeholder="Pesquisar..." className="w-full bg-[#121212] border border-white/10 rounded px-4 py-2 pl-10 text-sm text-white focus:border-primary outline-none" />
-                   <i className="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-500 text-xs"></i>
-                </div>
-                <button className="w-10 h-10 bg-primary rounded flex items-center justify-center text-black">
-                    <i className="fa-solid fa-filter"></i>
-                </button>
+        <h2 className="text-2xl font-bold font-display text-white mb-6">Clientes Detalhado</h2>
+
+        <div className="flex flex-col md:flex-row justify-between gap-4 mb-6">
+             <div className="relative flex-1 max-w-md">
+                <input type="text" placeholder="Pesquisar cliente..." className="w-full bg-[#121212] border border-white/10 rounded-lg px-4 py-2.5 pl-10 text-sm text-white focus:border-primary outline-none" />
+                <i className="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-gray-500 text-xs"></i>
              </div>
-             <div className="flex gap-2">
-                 <button className="px-4 py-2 border border-white/10 rounded text-gray-400 text-sm hover:text-white bg-[#121212]">Filtrar por Status <i className="fa-solid fa-chevron-down ml-1"></i></button>
-                 <button className="px-4 py-2 border border-white/10 rounded text-gray-400 text-sm hover:text-white bg-[#121212]">Última Visita <i className="fa-solid fa-chevron-down ml-1"></i></button>
-                 <button className="bg-primary hover:bg-orange-600 text-black font-bold py-2 px-6 rounded shadow-[0_0_15px_rgba(249,115,22,0.4)] text-sm">
-                    Adicionar Cliente
+             <div className="flex gap-2 overflow-x-auto">
+                 <button className="px-4 py-2 border border-orange-500/50 rounded-lg text-orange-500 text-sm bg-black hover:bg-orange-500/10">Status <i className="fa-solid fa-chevron-down ml-1 text-xs"></i></button>
+                 <button className="px-4 py-2 border border-orange-500/50 rounded-lg text-orange-500 text-sm bg-black hover:bg-orange-500/10">Fidelidade</button>
+                 <button className="px-4 py-2 border border-orange-500/50 rounded-lg text-orange-500 text-sm bg-black hover:bg-orange-500/10">Serviços <i className="fa-solid fa-chevron-down ml-1 text-xs"></i></button>
+                 <button className="px-4 py-2 border border-white/10 rounded-lg text-gray-400 text-sm bg-black ml-auto">Sort by <i className="fa-solid fa-chevron-down ml-1 text-xs"></i></button>
+                 <button className="bg-primary hover:bg-orange-600 text-black font-bold py-2 px-4 rounded-lg shadow-lg text-sm whitespace-nowrap">
+                    + Adicionar Novo Cliente
                  </button>
              </div>
         </div>
 
         <div className="bg-[#121212]/90 border border-white/10 rounded-xl overflow-hidden">
              <table className="w-full text-sm text-left">
-                 <thead className="text-xs text-gray-400 uppercase bg-black/40 border-b border-white/5">
+                 <thead className="text-xs text-gray-300 uppercase bg-black/40 border-b border-orange-500/30">
                     <tr>
-                       <th className="px-6 py-4 font-bold">Nome</th>
-                       <th className="px-6 py-4 font-bold">Contato</th>
-                       <th className="px-6 py-4 font-bold">E-mail</th>
-                       <th className="px-6 py-4 font-bold">Última Visita</th>
-                       <th className="px-6 py-4 font-bold text-right">Ações</th>
+                       <th className="px-6 py-4 font-bold text-white">Nome</th>
+                       <th className="px-6 py-4 font-bold text-white">Contato</th>
+                       <th className="px-6 py-4 font-bold text-white">Fidelidade</th>
+                       <th className="px-6 py-4 font-bold text-white">Última Visita</th>
+                       <th className="px-6 py-4 font-bold text-white">Serviços Preferidos</th>
+                       <th className="px-6 py-4 font-bold text-white text-right">Ações</th>
                     </tr>
                  </thead>
                  <tbody className="divide-y divide-white/5">
-                    {clientsList.map(client => (
-                        <tr key={client.id} className="hover:bg-white/5 transition-colors">
-                            <td className="px-6 py-4 text-white font-medium">{client.name}</td>
-                            <td className="px-6 py-4 text-gray-400">{client.phone}</td>
-                            <td className="px-6 py-4 text-gray-400">{client.email}</td>
-                            <td className="px-6 py-4 text-gray-400">{client.lastVisit}</td>
-                            <td className="px-6 py-4 text-right">
-                                <div className="flex justify-end gap-2">
-                                    <button className="w-8 h-8 rounded bg-orange-500 text-black flex items-center justify-center hover:bg-orange-600"><i className="fa-solid fa-pen text-xs"></i></button>
-                                    <button className="w-8 h-8 rounded bg-red-500/20 text-red-500 border border-red-500/20 flex items-center justify-center hover:bg-red-500/30"><i className="fa-solid fa-trash text-xs"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
+                    {detailedClientsList.map((client) => {
+                        let medalColor = "text-orange-700"; // Bronze
+                        let medalIcon = "fa-medal";
+                        if(client.fidelity === "Gold") { medalColor = "text-yellow-400"; medalIcon = "fa-award"; }
+                        if(client.fidelity === "Silver") { medalColor = "text-gray-300"; medalIcon = "fa-medal"; }
+
+                        return (
+                            <tr key={client.id} className="hover:bg-white/5 transition-colors group border-l-2 border-transparent hover:border-orange-500">
+                                <td className="px-6 py-4 text-gray-200 font-medium">{client.name}</td>
+                                <td className="px-6 py-4 text-gray-400">{client.phone}</td>
+                                <td className="px-6 py-4">
+                                    <div className="flex items-center gap-2">
+                                        <i className={`fa-solid ${medalIcon} ${medalColor}`}></i>
+                                        <span className="text-gray-300">{client.fidelity}</span>
+                                    </div>
+                                </td>
+                                <td className="px-6 py-4 text-gray-400">{client.lastVisit}</td>
+                                <td className="px-6 py-4 text-gray-400">{client.preferred}</td>
+                                <td className="px-6 py-4 text-right">
+                                    <button className="text-xs bg-white/5 hover:bg-white/10 text-gray-300 px-3 py-1.5 rounded border border-white/10 transition-colors">Ver Perfil</button>
+                                </td>
+                            </tr>
+                        );
+                    })}
                  </tbody>
              </table>
-             <div className="p-4 border-t border-white/5 flex justify-center gap-2">
-                 <button className="w-8 h-8 bg-primary text-black font-bold rounded flex items-center justify-center">1</button>
-                 <button className="w-8 h-8 bg-black border border-white/10 text-gray-400 rounded flex items-center justify-center hover:text-white">2</button>
-                 <button className="w-8 h-8 bg-black border border-white/10 text-gray-400 rounded flex items-center justify-center hover:text-white">3</button>
-                 <span className="flex items-end px-2 text-gray-600">...</span>
-                 <button className="px-4 h-8 bg-black border border-white/10 text-gray-400 rounded flex items-center justify-center hover:text-white text-xs">Próximo</button>
+             
+             <div className="p-4 border-t border-white/5 flex justify-end gap-2">
+                 <button className="w-8 h-8 bg-black border border-white/10 rounded text-gray-500 hover:text-white"><i className="fa-solid fa-chevron-left text-xs"></i></button>
+                 <button className="w-8 h-8 bg-orange-600 rounded text-white font-bold">1</button>
+                 <button className="w-8 h-8 bg-black border border-white/10 rounded text-gray-500 hover:text-white"><i className="fa-solid fa-chevron-right text-xs"></i></button>
              </div>
         </div>
     </div>
 );
+
+// --- DETAILED APPOINTMENTS VIEW (Agendamentos Detalhado) ---
+const AppointmentsDetailView = () => (
+    <div className="space-y-6">
+        <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-bold font-display text-white">Agendamentos Detalhado - Dashboard</h2>
+            <div className="relative">
+                 <input type="text" placeholder="Pesquisar..." className="bg-[#121212] border border-white/10 rounded-full py-2 px-4 pl-10 text-sm focus:border-primary outline-none w-64 text-white placeholder-gray-500"/>
+                 <i className="fa-solid fa-magnifying-glass absolute left-3.5 top-2.5 text-gray-500 text-xs"></i>
+            </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-6">
+            {/* Sidebar Filters */}
+            <div className="w-full lg:w-64 flex-shrink-0 space-y-6">
+                <div className="bg-[#121212] p-4 rounded-xl border border-white/10">
+                    <h3 className="text-white font-bold mb-4 text-sm uppercase tracking-wide">Filtrar por Profissional</h3>
+                    <div className="space-y-2">
+                        {['Jelm Carilo', 'Ana Souza', 'Pedro Santos'].map((name, idx) => (
+                            <label key={idx} className="flex items-center gap-3 cursor-pointer group">
+                                <div className={`w-4 h-4 rounded border flex items-center justify-center ${idx === 0 ? 'bg-orange-500 border-orange-500' : 'border-gray-600 bg-transparent group-hover:border-orange-500'}`}>
+                                    {idx === 0 && <i className="fa-solid fa-check text-black text-[10px]"></i>}
+                                </div>
+                                <span className={`text-sm ${idx === 0 ? 'text-white font-medium' : 'text-gray-400 group-hover:text-gray-300'}`}>{name}</span>
+                            </label>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="bg-[#121212] p-4 rounded-xl border border-white/10">
+                    <h3 className="text-white font-bold mb-4 text-sm uppercase tracking-wide">Filtrar por Serviço</h3>
+                    <div className="space-y-2">
+                        {['Corte Cabelo', 'Barba', 'Combo', 'Outros'].map((name, idx) => (
+                            <label key={idx} className="flex items-center gap-3 cursor-pointer group">
+                                <div className={`w-4 h-4 rounded border flex items-center justify-center ${idx === 0 ? 'bg-orange-500 border-orange-500' : 'border-gray-600 bg-transparent group-hover:border-orange-500'}`}>
+                                    {idx === 0 && <i className="fa-solid fa-check text-black text-[10px]"></i>}
+                                </div>
+                                <span className={`text-sm ${idx === 0 ? 'text-white font-medium' : 'text-gray-400 group-hover:text-gray-300'}`}>{name}</span>
+                            </label>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="bg-[#121212] p-4 rounded-xl border border-white/10">
+                    <h3 className="text-white font-bold mb-4 text-sm uppercase tracking-wide">Filtrar por Status</h3>
+                    <div className="space-y-2">
+                        {['Confirmado', 'Pendente', 'Concluído', 'Cancelado'].map((name, idx) => (
+                            <label key={idx} className="flex items-center gap-3 cursor-pointer group">
+                                <div className={`w-4 h-4 rounded border flex items-center justify-center ${[0, 2].includes(idx) ? 'bg-orange-500 border-orange-500' : 'border-gray-600 bg-transparent group-hover:border-orange-500'}`}>
+                                    {[0, 2].includes(idx) && <i className="fa-solid fa-check text-black text-[10px]"></i>}
+                                </div>
+                                <span className={`text-sm ${[0, 2].includes(idx) ? 'text-white font-medium' : 'text-gray-400 group-hover:text-gray-300'}`}>{name}</span>
+                            </label>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Calendar Grid */}
+            <div className="flex-1 bg-[#121212] border border-white/10 rounded-xl overflow-hidden">
+                <div className="p-4 border-b border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 bg-black/40">
+                     <h3 className="text-xl font-bold text-white">Abril 2024</h3>
+                     <div className="flex items-center gap-4">
+                         <div className="bg-black border border-white/10 rounded-lg p-1 flex">
+                             <button className="px-4 py-1.5 text-xs bg-white/10 text-white font-bold rounded">Dia</button>
+                             <button className="px-4 py-1.5 text-xs text-gray-400 hover:text-white rounded">Semana</button>
+                             <button className="px-4 py-1.5 text-xs text-gray-400 hover:text-white rounded">Mês</button>
+                         </div>
+                         <div className="flex items-center gap-2">
+                             <span className="text-sm text-gray-400">Abril 2024</span>
+                             <div className="flex">
+                                 <button className="w-8 h-8 bg-black border border-white/10 rounded-l flex items-center justify-center text-gray-400 hover:text-white"><i className="fa-solid fa-chevron-left text-xs"></i></button>
+                                 <button className="w-8 h-8 bg-black border border-white/10 rounded-r flex items-center justify-center text-gray-400 hover:text-white"><i className="fa-solid fa-chevron-right text-xs"></i></button>
+                             </div>
+                         </div>
+                     </div>
+                </div>
+
+                <div className="overflow-x-auto">
+                    <div className="min-w-[800px] grid grid-cols-7 border-b border-white/10 text-center bg-black/20">
+                         {['Segunda-feira, 15', 'Terça-feira, 16', 'Quarta-feira, 17', 'Quinta-feira, 18', 'Sexta-feira, 19', 'Sábado, 20', 'Domingo, 21'].map(day => (
+                             <div key={day} className="py-3 text-xs font-bold text-gray-400 uppercase tracking-wider border-r border-white/5 last:border-r-0">{day}</div>
+                         ))}
+                    </div>
+                    {/* Simplified Grid Mockup */}
+                    <div className="min-w-[800px] grid grid-cols-7 auto-rows-[150px] bg-black/20">
+                         {/* Week Grid */}
+                         {[0,1,2,3,4,5,6].map((dayIndex) => (
+                             <div key={dayIndex} className="border-r border-b border-white/5 p-2 relative group hover:bg-white/5 transition-colors">
+                                 <span className="absolute top-2 right-2 text-xs text-gray-600 font-bold">{15 + dayIndex}</span>
+                                 
+                                 {/* Mock Appointments */}
+                                 {dayIndex === 4 && (
+                                     <>
+                                        <div className="mb-2 bg-[#1a1a1a] border-l-2 border-orange-500 p-2 rounded shadow-sm cursor-pointer hover:bg-[#252525]">
+                                            <div className="text-[10px] text-gray-400 mb-1">08:00 - 10:00</div>
+                                            <div className="flex items-center gap-1 mb-1"><i className="fa-solid fa-user text-[10px] text-orange-500"></i> <span className="text-[10px] text-white font-bold">Carlos Oliveira</span></div>
+                                            <div className="text-[10px] text-gray-500 mb-1">Corte Cabelo</div>
+                                            <div className="text-[10px] text-gray-600"><i className="fa-solid fa-user-tie mr-1"></i>Prof. Jelm Carilo</div>
+                                            <div className="mt-2 flex gap-1">
+                                                <button className="text-[8px] bg-white/5 border border-white/10 px-1 rounded text-gray-400 hover:text-white">Editar</button>
+                                                <button className="text-[8px] bg-white/5 border border-white/10 px-1 rounded text-gray-400 hover:text-white">Cancelar</button>
+                                            </div>
+                                        </div>
+                                     </>
+                                 )}
+                                 {dayIndex === 5 && (
+                                     <>
+                                        <div className="mb-2 bg-[#1a1a1a] border-l-2 border-green-500 p-2 rounded shadow-sm cursor-pointer hover:bg-[#252525]">
+                                            <div className="text-[10px] text-gray-400 mb-1">09:00 - 10:00</div>
+                                            <div className="flex items-center gap-1 mb-1"><i className="fa-solid fa-user text-[10px] text-green-500"></i> <span className="text-[10px] text-white font-bold">Marcos O.</span></div>
+                                            <div className="text-[10px] text-gray-500 mb-1">Barba</div>
+                                        </div>
+                                        <div className="bg-[#1a1a1a] border-l-2 border-blue-500 p-2 rounded shadow-sm cursor-pointer hover:bg-[#252525]">
+                                            <div className="text-[10px] text-gray-400 mb-1">14:00 - 15:00</div>
+                                            <div className="flex items-center gap-1 mb-1"><i className="fa-solid fa-user text-[10px] text-blue-500"></i> <span className="text-[10px] text-white font-bold">Ana P.</span></div>
+                                            <div className="text-[10px] text-gray-500 mb-1">Combo</div>
+                                        </div>
+                                     </>
+                                 )}
+                             </div>
+                         ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
 
 const ProfessionalsView = () => (
     <div className="space-y-6">
@@ -347,129 +653,11 @@ const ProfessionalsView = () => (
     </div>
 );
 
+// Basic Agenda View (renamed to simplify, though the detail view is now dominant)
 const AgendaView = () => (
-    <div className="space-y-6">
-         <div className="flex flex-col md:flex-row justify-between items-center bg-[#121212] p-4 rounded-xl border border-white/10 gap-4">
-             <div className="flex items-center gap-4">
-                 <button className="w-8 h-8 rounded bg-black border border-white/10 flex items-center justify-center text-gray-400 hover:text-white"><i className="fa-solid fa-chevron-left text-xs"></i></button>
-                 <span className="text-white font-bold text-lg">Setembro 2023</span>
-                 <button className="w-8 h-8 rounded bg-black border border-white/10 flex items-center justify-center text-gray-400 hover:text-white"><i className="fa-solid fa-chevron-right text-xs"></i></button>
-             </div>
-             
-             <div className="bg-black border border-white/10 rounded-lg p-1 flex gap-1">
-                 <button className="px-4 py-1 text-xs text-gray-400 hover:text-white rounded">Dia</button>
-                 <button className="px-4 py-1 text-xs bg-primary text-black font-bold rounded shadow-lg">Semana</button>
-                 <button className="px-4 py-1 text-xs text-gray-400 hover:text-white rounded">Mês</button>
-             </div>
-
-             <button className="bg-primary hover:bg-orange-600 text-black font-bold py-2 px-6 rounded shadow-[0_0_15px_rgba(249,115,22,0.4)] text-sm">
-                Adicionar Agendamento
-             </button>
-         </div>
-
-         <div className="bg-[#121212] border border-white/10 rounded-xl overflow-x-auto">
-             <div className="min-w-[1000px] p-6">
-                  {/* Calendar Header */}
-                  <div className="flex justify-between items-center mb-6 px-12">
-                      <h2 className="text-2xl font-bold text-white">18 Set - 24 Set</h2>
-                      <div className="flex gap-2">
-                          <button className="w-8 h-8 bg-black border border-white/10 rounded flex items-center justify-center text-gray-400"><i className="fa-solid fa-chevron-left text-xs"></i></button>
-                          <button className="w-8 h-8 bg-black border border-white/10 rounded flex items-center justify-center text-gray-400"><i className="fa-solid fa-chevron-right text-xs"></i></button>
-                      </div>
-                  </div>
-
-                  {/* Calendar Grid Header */}
-                  <div className="grid grid-cols-8 gap-px bg-white/5 border border-white/10 rounded-t-lg">
-                      <div className="p-4"></div> {/* Time Col */}
-                      {['18 Set', '19 Set', '20 Set', '21 Set', '22 Set', '23 Set', '24 Set'].map(date => (
-                          <div key={date} className="p-4 text-center text-sm font-bold text-white bg-black/40">{date}</div>
-                      ))}
-                  </div>
-
-                  {/* Calendar Rows */}
-                  <div className="grid grid-cols-8 gap-px bg-white/5 border-x border-b border-white/10">
-                       {/* Row 08:00 */}
-                       <div className="bg-[#121212] text-xs text-gray-500 p-2 text-center border-r border-white/5">08:00</div>
-                       {[1,2,3,4,5,6,7].map(i => <div key={i} className="bg-[#121212] border-r border-white/5 h-16 relative group hover:bg-white/5 transition-colors"></div>)}
-
-                       {/* Row 09:00 */}
-                       <div className="bg-[#121212] text-xs text-gray-500 p-2 text-center border-r border-white/5">09:00</div>
-                       {[1,2,3,4,5,6,7].map(i => <div key={i} className="bg-[#121212] border-r border-white/5 h-16 relative group hover:bg-white/5 transition-colors"></div>)}
-
-                       {/* Row 10:00 */}
-                       <div className="bg-[#121212] text-xs text-gray-500 p-2 text-center border-r border-white/5">10:00</div>
-                       <div className="bg-[#121212] border-r border-white/5 h-16 relative p-1">
-                           <div className="bg-primary/90 rounded p-1 h-full text-[10px] text-black font-bold border-l-2 border-white shadow-sm cursor-pointer hover:bg-orange-500">
-                               Corte com João<br/>10:00 - 11:00
-                           </div>
-                       </div>
-                       <div className="bg-[#121212] border-r border-white/5 h-16 relative p-1">
-                           <div className="bg-amber-700/80 rounded p-1 h-full text-[10px] text-white font-bold border-l-2 border-amber-500 shadow-sm cursor-pointer hover:brightness-110">
-                               Corte com João<br/>10:00 - 11:00
-                           </div>
-                       </div>
-                       <div className="bg-[#121212] border-r border-white/5 h-16 relative p-1">
-                           <div className="bg-gray-700/80 rounded p-1 h-full text-[10px] text-white font-bold border-l-2 border-gray-400 shadow-sm cursor-pointer hover:brightness-110">
-                               Corte com João<br/>10:00 - 11:00
-                           </div>
-                       </div>
-                       {[4,5].map(i => <div key={i} className="bg-[#121212] border-r border-white/5 h-16 relative"></div>)}
-                       <div className="bg-[#121212] border-r border-white/5 h-16 relative p-1">
-                           <div className="bg-primary/90 rounded p-1 h-full text-[10px] text-black font-bold border-l-2 border-white shadow-sm cursor-pointer hover:bg-orange-500">
-                               Corte com João<br/>10:00 - 11:00
-                           </div>
-                       </div>
-                       <div className="bg-[#121212] border-r border-white/5 h-16 relative"></div>
-
-                       {/* Row 14:00 */}
-                       <div className="bg-[#121212] text-xs text-gray-500 p-2 text-center border-r border-white/5">14:00</div>
-                       <div className="bg-[#121212] border-r border-white/5 h-16 relative"></div>
-                       <div className="bg-[#121212] border-r border-white/5 h-16 relative p-1">
-                           <div className="bg-amber-700/80 rounded p-1 h-full text-[10px] text-white font-bold border-l-2 border-amber-500 shadow-sm cursor-pointer hover:brightness-110">
-                               Barba com Pedro<br/>14:30 - 15:00
-                           </div>
-                       </div>
-                       <div className="bg-[#121212] border-r border-white/5 h-16 relative"></div>
-                       <div className="bg-[#121212] border-r border-white/5 h-16 relative p-1">
-                           <div className="bg-amber-700/80 rounded p-1 h-full text-[10px] text-white font-bold border-l-2 border-amber-500 shadow-sm cursor-pointer hover:brightness-110">
-                               Barba com Pedro<br/>14:30 - 15:00
-                           </div>
-                       </div>
-                       <div className="bg-[#121212] border-r border-white/5 h-16 relative p-1">
-                           <div className="bg-gray-700/80 rounded p-1 h-full text-[10px] text-white font-bold border-l-2 border-gray-400 shadow-sm cursor-pointer hover:brightness-110">
-                               Barba com Pedro<br/>14:30 - 15:00
-                           </div>
-                       </div>
-                       <div className="bg-[#121212] border-r border-white/5 h-16 relative p-1">
-                           <div className="bg-amber-700/80 rounded p-1 h-full text-[10px] text-white font-bold border-l-2 border-amber-500 shadow-sm cursor-pointer hover:brightness-110">
-                               Barba com Pedro<br/>14:30 - 15:00
-                           </div>
-                       </div>
-                       <div className="bg-[#121212] border-r border-white/5 h-16 relative"></div>
-
-                       {/* Row 17:00 */}
-                       <div className="bg-[#121212] text-xs text-gray-500 p-2 text-center border-r border-white/5">17:00</div>
-                       <div className="bg-[#121212] border-r border-white/5 h-16 relative p-1">
-                           <div className="bg-primary/90 rounded p-1 h-full text-[10px] text-black font-bold border-l-2 border-white shadow-sm cursor-pointer hover:bg-orange-500">
-                               Corte e Barba com Ana<br/>17:00 - 18:30
-                           </div>
-                       </div>
-                       {[2,3,4,5].map(i => <div key={i} className="bg-[#121212] border-r border-white/5 h-16 relative"></div>)}
-                       <div className="bg-[#121212] border-r border-white/5 h-16 relative p-1">
-                           <div className="bg-amber-900/60 rounded p-1 h-full text-[10px] text-gray-300 font-bold border-l-2 border-amber-700 shadow-sm cursor-pointer hover:brightness-110">
-                               Corte e Barba com Ana<br/>17:00 - 18:30
-                           </div>
-                       </div>
-                       <div className="bg-[#121212] border-r border-white/5 h-16 relative"></div>
-                  </div>
-             </div>
-
-             <div className="p-4 bg-black border-t border-white/10 flex justify-between items-center">
-                 <button className="text-gray-400 text-sm bg-[#121212] border border-white/10 px-4 py-2 rounded flex items-center gap-2">Todos Profissionais <i className="fa-solid fa-chevron-down text-xs"></i></button>
-                 <span className="text-gray-500 text-sm">Cancelados</span>
-                 <button className="bg-black text-white text-sm border border-white/20 px-4 py-2 rounded hover:bg-white/5">Hoje</button>
-             </div>
-         </div>
+    <div className="text-center py-20">
+        <h2 className="text-xl text-gray-400 mb-4">Visualização de Agenda Padrão</h2>
+        <p className="text-sm text-gray-600">Use o card "Agendamentos" no Painel para ver a versão detalhada.</p>
     </div>
 );
 
@@ -585,7 +773,7 @@ const SettingsView = () => (
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('dashboard'); // 'dashboard', 'services', 'clients', 'professionals', 'agenda', 'settings'
+  const [activeTab, setActiveTab] = useState('dashboard'); // 'dashboard', 'services', 'clients', 'professionals', 'agenda', 'settings', 'appointments_detail'
 
   const handleLogout = () => {
     localStorage.removeItem('isAuthenticated');
@@ -598,6 +786,7 @@ const Dashboard: React.FC = () => {
           case 'clients': return 'Clientes';
           case 'professionals': return 'Profissionais';
           case 'agenda': return 'Agenda';
+          case 'appointments_detail': return 'Agendamentos Detalhado';
           case 'settings': return 'Configurações';
           default: return 'Painel de Controle';
       }
@@ -706,11 +895,12 @@ const Dashboard: React.FC = () => {
 
         {/* Content Area */}
         <div className="animate-fade-in">
-            {activeTab === 'dashboard' && <DashboardHome />}
+            {activeTab === 'dashboard' && <DashboardHome setActiveTab={setActiveTab} />}
             {activeTab === 'services' && <ServicesView />}
             {activeTab === 'clients' && <ClientsView />}
             {activeTab === 'professionals' && <ProfessionalsView />}
-            {activeTab === 'agenda' && <AgendaView />}
+            {activeTab === 'agenda' && <AppointmentsDetailView />} 
+            {activeTab === 'appointments_detail' && <AppointmentsDetailView />}
             {activeTab === 'settings' && <SettingsView />}
         </div>
 
